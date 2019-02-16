@@ -1,0 +1,69 @@
+<template>
+  <div id="app">
+    <a href="#" @click.prevent='runLayout' class='btn-command'>Make 200 layout steps</a>
+  </div>
+</template>
+
+<script>
+import createScene from './lib/createScene';
+import fileDrop from './lib/fileDrop.js';
+import loadDroppedGraph from './lib/loadDroppedGraph.js';
+
+export default {
+  name: 'app',
+  methods: {
+    runLayout() {
+      this.scene.runLayout(200);
+    },
+    onDropped(files) {
+      loadDroppedGraph(files);
+    },
+  },
+  mounted() {
+    const canvas = document.getElementById('cnv');
+    this.scene = createScene(canvas);
+    this.fileDrop = fileDrop(document.body, this.onDropped);
+  },
+  beforeDestroy() {
+    if (this.scene) {
+      this.scene.dispose();
+    }
+    this.fileDrop.dispose();
+  }
+}
+</script>
+
+<style>
+#app {
+  position: absolute;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+.row .label {
+  flex: 1;
+}
+.row .value {
+  flex: 1;
+}
+.row select {
+  width: 100%;
+}
+.btn-command {
+  display: block;
+  padding: 4px;
+  margin-top: 10px;
+  border: 1px solid;
+}
+
+a {
+  color: rgb(244, 244, 244);
+  text-decoration: none;
+  text-align: center;
+  padding: 0 4px
+}
+</style>
