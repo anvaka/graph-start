@@ -38,6 +38,15 @@ npm run build
 ### Customize vue configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+## What's inside?
+
+* [ngraph.graph](https://github.com/anvaka/ngraph.graph) as a graph data structure
+* [ngraph.fromdot](https://github.com/anvaka/ngraph.fromdot) loads `.dot` files
+* [panzoom](https://github.com/anvaka/panzoom) for pan/zoom interaction
+* [ngraph.forcelayout](https://github.com/anvaka/ngraph.forcelayout) for the basic graph layout
+* [w-gl](https://github.com/anvaka/w-gl) - super duper obscure (and fast) WebGL renderer that can render dots and lines.
+* vue.js powered UI and dev tools.
+
 ## Thanks!
 
 * Stay tuned for updates: https://twitter.com/anvaka
