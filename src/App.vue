@@ -6,29 +6,22 @@
 
 <script>
 import createScene from './lib/createScene';
-import fileDrop from './lib/fileDrop.js';
-import loadDroppedGraph from './lib/loadDroppedGraph.js';
 
 export default {
   name: 'app',
   methods: {
     runLayout() {
       this.scene.runLayout(200);
-    },
-    onDropped(files) {
-      loadDroppedGraph(files);
-    },
+    }
   },
   mounted() {
     const canvas = document.getElementById('cnv');
     this.scene = createScene(canvas);
-    this.fileDrop = fileDrop(document.body, this.onDropped);
   },
   beforeDestroy() {
     if (this.scene) {
       this.scene.dispose();
     }
-    this.fileDrop.dispose();
   }
 }
 </script>
