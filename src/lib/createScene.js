@@ -26,6 +26,7 @@ export default function createScene(canvas) {
     if (scene) {
       scene.dispose();
       scene = null
+      cancelAnimationFrame(rafHandle);
     }
     scene = initScene();
     graph = newGraph
@@ -131,6 +132,7 @@ export default function createScene(canvas) {
   function dispose() {
     cancelAnimationFrame(rafHandle);
 
+    scene.dispose();
     bus.off('load-graph', loadGraph);
   }
 }
