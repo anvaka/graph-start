@@ -1,9 +1,9 @@
-import { scene as makeWGLScene, PointCollection, WireCollection} from 'w-gl';
+import { createScene, PointCollection, WireCollection} from 'w-gl';
 import bus from './bus';
 import getGraph from './getGraph';
 import createLayout from 'ngraph.forcelayout';
 
-export default function createScene(canvas) {
+export default function createGraphScene(canvas) {
   let drawLinks = true;
 
   // Since graph can be loaded dynamically, we have these uninitialized
@@ -32,7 +32,11 @@ export default function createScene(canvas) {
     graph = newGraph
 
     layout = createLayout(graph, {
-      timeStep: 5 
+      timeStep: 0.5,
+      springLength: 10,
+      springCoeff: 0.8,
+      gravity: -12,
+      dragCoeff: 0.9,
     });
 
     layout.step();
@@ -48,7 +52,7 @@ export default function createScene(canvas) {
   }
 
   function initScene() {
-    let scene = makeWGLScene(canvas);
+    let scene = createScene(canvas);
     scene.setClearColor(12/255, 41/255, 82/255, 1)
     let initialSceneSize = 100;
     scene.setViewBox({
@@ -64,6 +68,7 @@ export default function createScene(canvas) {
     let nodeIdToUI = new Map();
     let linkIdToUI = new Map();
     let nodes = new PointCollection(graph.getNodesCount());
+
     graph.forEachNode(node => {
       var point = layout.getNodePosition(node.id);
       let size = 10;
@@ -74,19 +79,18 @@ export default function createScene(canvas) {
         node.data.size = size;
       }
       point.size = size
-      point.color = {
-        r: 114/255,
-        g: 248/255,
-        b: 252/255,
-      }
+      point.color = 0x90f8fcff;
       var ui = nodes.add(point, node.id);
       nodeIdToUI.set(node.id, ui);
     });
 
-    let lines = new WireCollection(graph.getLinksCount());
-    lines.color.r = 6/255;
-    lines.color.g = 28/255;
-    lines.color.b = 70/255;
+    let lines = new WireCollection(graph.getLinksCount(), {
+      allowColors: false,
+      is3D: false
+    });
+    lines.color.r = 0xc5/255;
+    lines.color.g = 0xdc/255;
+    lines.color.b = 0xff/255;
     lines.color.a = 0.2;
 
     graph.forEachLink(link => {

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import createScene from './lib/createScene';
+import createGraphScene from './lib/createGraphScene';
 
 export default {
   name: 'app',
@@ -16,7 +16,7 @@ export default {
   },
   mounted() {
     const canvas = document.getElementById('cnv');
-    this.scene = createScene(canvas);
+    this.scene = createGraphScene(canvas);
   },
   beforeDestroy() {
     if (this.scene) {
