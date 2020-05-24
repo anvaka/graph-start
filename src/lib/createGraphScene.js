@@ -54,7 +54,7 @@ export default function createGraphScene(canvas) {
   function initScene() {
     let scene = createScene(canvas);
     scene.setClearColor(12/255, 41/255, 82/255, 1)
-    let initialSceneSize = 100;
+    let initialSceneSize = 40;
     scene.setViewBox({
       left:  -initialSceneSize,
       top:   -initialSceneSize,
@@ -71,7 +71,7 @@ export default function createGraphScene(canvas) {
 
     graph.forEachNode(node => {
       var point = layout.getNodePosition(node.id);
-      let size = 10;
+      let size = 1;
       if (node.data && node.data.size) {
         size = node.data.size;
       } else {
