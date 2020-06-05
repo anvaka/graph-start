@@ -1,4 +1,6 @@
-import { createScene, PointCollection, WireCollection} from 'w-gl';
+import {createScene} from 'w-gl';
+import LineCollection from './LineCollection';
+import PointCollection from './PointCollection';
 import bus from './bus';
 import getGraph from './getGraph';
 import createLayout from 'ngraph.forcelayout';
@@ -9,7 +11,7 @@ export default function createGraphScene(canvas) {
   // Since graph can be loaded dynamically, we have these uninitialized
   // and captured into closure. loadGraph will do the initialization
   let graph, layout;
-  let scene, linkUI, nodeUI;
+  let scene, nodes, lines;
 
   let layoutSteps = 0; // how many frames shall we run layout?
   let rafHandle;
@@ -40,9 +42,7 @@ export default function createGraphScene(canvas) {
     });
 
     layout.step();
-    let ui = initUIElements();
-    linkUI = ui.linkUI;
-    nodeUI = ui.nodeUI;
+    initUIElements();
 
     rafHandle = requestAnimationFrame(frame);
   }
@@ -65,9 +65,9 @@ export default function createGraphScene(canvas) {
   }
   
   function initUIElements() {
-    let nodeIdToUI = new Map();
-    let linkIdToUI = new Map();
-    let nodes = new PointCollection(graph.getNodesCount());
+    nodes = new PointCollection(scene.getGL(), {
+      capacity: graph.getNodesCount()
+    });
 
     graph.forEachNode(node => {
       var point = layout.getNodePosition(node.id);
@@ -78,33 +78,22 @@ export default function createGraphScene(canvas) {
         if (!node.data) node.data = {};
         node.data.size = size;
       }
-      point.size = size
-      point.color = 0x90f8fcff;
-      var ui = nodes.add(point, node.id);
-      nodeIdToUI.set(node.id, ui);
+      node.ui = {size, position: [point.x, point.y, point.z || 0], color: 0x90f8fcff};
+      node.uiId = nodes.add(node.ui);
     });
 
-    let lines = new WireCollection(graph.getLinksCount(), {
-      allowColors: false,
-      is3D: false
-    });
-    lines.color.r = 0xc5/255;
-    lines.color.g = 0xdc/255;
-    lines.color.b = 0xff/255;
-    lines.color.a = 0.2;
+    lines = new LineCollection(scene.getGL(), { capacity: graph.getLinksCount() });
 
     graph.forEachLink(link => {
       var from = layout.getNodePosition(link.fromId);
       var to = layout.getNodePosition(link.toId);
-      var line = { from, to };
-      var ui = lines.add(line);
-      linkIdToUI.set(link.id, ui);
+      var line = { from: [from.x, from.y, from.z || 0], to: [to.x, to.y, to.z || 0], color: 0xFFFFFF10 };
+      link.ui = line;
+      link.uiId = lines.add(link.ui);
     });
 
     scene.appendChild(lines);
     scene.appendChild(nodes);
-
-    return {nodeUI: nodeIdToUI, linkUI: linkIdToUI};
   }
 
   function frame() {
@@ -120,15 +109,22 @@ export default function createGraphScene(canvas) {
 
   function drawGraph() {
     graph.forEachNode(node => {
-      var pos = layout.getNodePosition(node.id);
-      nodeUI.get(node.id).update(pos);
+      let pos = layout.getNodePosition(node.id);
+      let uiPosition = node.ui.position;
+      uiPosition[0] = pos.x;
+      uiPosition[1] = pos.y;
+      uiPosition[2] = pos.z || 0;
+      nodes.update(node.uiId, node.ui)
     });
 
     if (drawLinks) {
       graph.forEachLink(link => {
         var fromPos = layout.getNodePosition(link.fromId);
         var toPos = layout.getNodePosition(link.toId);
-        linkUI.get(link.id).update(fromPos, toPos);
+        let {from, to} = link.ui;
+        from[0] = fromPos.x; from[1] = fromPos.y; from[2] = fromPos.z || 0;
+        to[0] = toPos.x; to[1] = toPos.y; to[2] = toPos.z || 0;
+        lines.update(link.uiId, link.ui);
       })
     }
   }
