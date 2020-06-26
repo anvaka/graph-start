@@ -145,7 +145,7 @@ export default class MSDFTextCollection extends GLCollection {
       });
       dx += sdfPos.xadvance * scale;
     }
-    this.scene.renderFrame();
+    if (this.scene) this.scene.renderFrame();
   }
 }
 
