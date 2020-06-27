@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a href="#" @click.prevent='runLayout' class='btn-command'>Make 200 layout steps</a>
+    <a href="#" @click.prevent='runLayout' class='btn-command'>Make {{stepCount}} layout steps</a>
   </div>
 </template>
 
@@ -9,9 +9,14 @@ import createGraphScene from './lib/createGraphScene';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      stepCount: 200
+    }
+  },
   methods: {
     runLayout() {
-      this.scene.runLayout(200);
+      this.scene.runLayout(this.stepCount);
     }
   },
   mounted() {
