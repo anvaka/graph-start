@@ -78,7 +78,7 @@ export default function createGraphScene(canvas) {
         if (!node.data) node.data = {};
         node.data.size = size;
       }
-      node.ui = {size, position: [point.x, point.y, point.z || 0], color: 0x90f8fcff};
+      node.ui = {size, position: [point.x, point.y, point.z || 0], color: node.data.color || 0x90f8fcff};
       node.uiId = nodes.add(node.ui);
     });
 
