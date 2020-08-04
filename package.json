@@ -16,7 +16,7 @@
     "ngraph.fromjson": "^3.0.0",
     "ngraph.generators": "^19.0.0",
     "ngraph.graph": "^19.1.0",
-    "w-gl": "^0.12.0",
+    "w-gl": "^0.13.0",
     "core-js": "^3.4.3",
     "vue": "^2.6.10"
   },
