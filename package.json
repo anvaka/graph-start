@@ -9,6 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "core-js": "^3.4.3",
     "miserables": "^2.0.0",
     "ngraph.events": "^1.0.0",
     "ngraph.forcelayout": "^1.0.1",
@@ -16,9 +17,8 @@
     "ngraph.fromjson": "^3.0.0",
     "ngraph.generators": "^19.0.0",
     "ngraph.graph": "^19.1.0",
-    "w-gl": "^0.13.0",
-    "core-js": "^3.4.3",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "w-gl": "^0.13.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
