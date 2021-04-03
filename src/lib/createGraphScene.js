@@ -36,9 +36,9 @@ export default function createGraphScene(canvas) {
     layout = createLayout(graph, {
       timeStep: 0.5,
       springLength: 10,
-      springCoeff: 0.8,
+      springCoefficient: 0.8,
       gravity: -12,
-      dragCoeff: 0.9,
+      dragCoefficient: 0.9,
     });
 
     layout.step();

@@ -12,13 +12,13 @@
     "core-js": "^3.4.3",
     "miserables": "^2.0.0",
     "ngraph.events": "^1.0.0",
-    "ngraph.forcelayout": "^1.0.1",
+    "ngraph.forcelayout": "^3.0.1",
     "ngraph.fromdot": "^6.0.0",
     "ngraph.fromjson": "^3.0.0",
     "ngraph.generators": "^19.0.0",
     "ngraph.graph": "^19.1.0",
     "vue": "^2.6.10",
-    "w-gl": "^0.13.0"
+    "w-gl": "^0.16.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",
