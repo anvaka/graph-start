@@ -1,35 +1,34 @@
-<template>
-  <div id="app">
-    <a href="#" @click.prevent='runLayout' class='btn-command'>Make {{stepCount}} layout steps</a>
-  </div>
-</template>
-
 <script>
 import createGraphScene from './lib/createGraphScene';
 
 export default {
-  name: 'app',
   data() {
     return {
       stepCount: 200
     }
   },
+
   methods: {
     runLayout() {
       this.scene.runLayout(this.stepCount);
-    }
+    },
   },
+
   mounted() {
     const canvas = document.getElementById('cnv');
     this.scene = createGraphScene(canvas);
   },
-  beforeDestroy() {
-    if (this.scene) {
-      this.scene.dispose();
-    }
+
+  beforeUnmount() {
+    if (this.scene) this.scene.dispose();
   }
 }
 </script>
+
+<template>
+  <a href="#" @click.prevent='runLayout' class='btn-command'>Make {{stepCount}} layout steps</a>
+</template>
+
 
 <style>
 #app {

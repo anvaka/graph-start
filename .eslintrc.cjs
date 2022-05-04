@@ -1,10 +1,8 @@
+/* eslint-env node */
 module.exports = {
   root: true,
-  env: {
-    node: true
-  },
-  'extends': [
-    'plugin:vue/essential',
+  extends: [
+    'plugin:vue/vue3-essential',
     'eslint:recommended'
   ],
   rules: {
@@ -12,7 +10,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-unused-vars': 1
   },
-  parserOptions: {
-    parser: 'babel-eslint'
+  env: {
+    'vue/setup-compiler-macros': true
   }
 }
