@@ -6,5 +6,5 @@ git init
 git add .
 git commit -m 'push to gh-pages'
 ## Change the line below to deploy to your gh-pages
-git push --force git@github.com:anvaka/graph-start.git master:gh-pages
+git push --force git@github.com:anvaka/graph-start.git main:gh-pages
 cd ../
