@@ -1,17 +1,19 @@
 import {createScene} from 'w-gl';
 import LineCollection from './LineCollection';
 import PointCollection from './PointCollection';
+import MSDFTextCollection from './MSDFTextCollection';
 import bus from './bus';
 import getGraph from './getGraph';
 import createLayout from 'ngraph.forcelayout';
 
 export default function createGraphScene(canvas) {
   let drawLinks = true;
+  let drawLabels = true;
 
   // Since graph can be loaded dynamically, we have these uninitialized
   // and captured into closure. loadGraph will do the initialization
   let graph, layout;
-  let scene, nodes, lines;
+  let scene, nodes, lines, labels;
 
   let layoutSteps = 0; // how many frames shall we run layout?
   let rafHandle;
@@ -94,6 +96,11 @@ export default function createGraphScene(canvas) {
 
     scene.appendChild(lines);
     scene.appendChild(nodes);
+    if (drawLabels) {
+      labels = new MSDFTextCollection(scene.getGL());
+      redrawLabels();
+      scene.appendChild(labels);
+    }
   }
 
   function frame() {
@@ -102,6 +109,8 @@ export default function createGraphScene(canvas) {
     if (layoutSteps > 0) {
       layoutSteps -= 1;
       layout.step();
+      // Drawing labels is heavy, so avoid it if we don't need it
+      redrawLabels();
     }
     drawGraph();
     scene.renderFrame();
@@ -127,6 +136,22 @@ export default function createGraphScene(canvas) {
         lines.update(link.uiId, link.ui);
       })
     }
+  }
+
+  function redrawLabels() {
+    if (!drawLabels) return;
+    labels.clear();
+    graph.forEachNode(node => {
+      const text = '' + ((node.data && node.data.label) || node.id);
+
+      labels.addText({
+        text,
+        x: node.ui.position[0],
+        y: node.ui.position[1] - node.ui.size / 2,
+        limit: node.ui.size,
+        cx: 0.5
+      });
+    });
   }
 
   function dispose() {
