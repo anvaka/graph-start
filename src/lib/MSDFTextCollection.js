@@ -14,7 +14,7 @@ export default class MSDFTextCollection extends GLCollection {
     this.fontInfo = null;
 
     let fontPath = 'fonts';
-    fetch(`${fontPath}/roboto.json`, { mode: 'cors' })
+    fetch(`${fontPath}/Roboto.json`, { mode: 'cors' })
       .then((x) => x.json())
       .then((fontInfo) => {
         this.fontInfo = fontInfo;
@@ -34,7 +34,7 @@ export default class MSDFTextCollection extends GLCollection {
           this.queue.forEach((q) => this.addText(q));
           this.queue = [];
         };
-        this.msdfImage.src = `${fontPath}/roboto0.png`;
+        this.msdfImage.src = `${fontPath}/Roboto0.png`;
       });
   }
 
