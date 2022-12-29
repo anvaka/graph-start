@@ -47,6 +47,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 * [w-gl](https://github.com/anvaka/w-gl) - super duper obscure (and fast) WebGL renderer that can render dots and lines.
 * vue.js powered UI and dev tools.
 
+## License
+
+This start package is licensed under MIT license. 
+
 ## Thanks!
 
 * Stay tuned for updates: https://twitter.com/anvaka
