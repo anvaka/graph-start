@@ -22,7 +22,7 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
 ```
 
 This should render a simple graph and you can do some basic layout. You can drop `.dot` files into it
