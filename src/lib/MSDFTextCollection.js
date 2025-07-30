@@ -42,7 +42,7 @@ export default class MSDFTextCollection extends GLCollection {
     this.program.setCount(0);
   }
 
-  draw(gl, drawContext) {
+  draw(/* gl, drawContext */) {
     if (!this.uniforms) {
       this.uniforms = {
         modelViewProjection: this.modelViewProjection,

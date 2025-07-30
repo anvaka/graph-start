@@ -16,7 +16,7 @@ export default function loadDroppedGraph(files) {
     if (graph) bus.fire('load-graph', graph);
   }
   reader.onerror = (e) => {
-    //eslint-disable-next-line
+     
     console.log('error loading dot file: ', e)
   };
 
@@ -24,7 +24,7 @@ export default function loadDroppedGraph(files) {
     try {
       return fromDot(fileContent);
     } catch (e) {
-      //eslint-disable-next-line
+       
       console.log('error loading dot file: ', e)
     }
   }
@@ -32,7 +32,7 @@ export default function loadDroppedGraph(files) {
     try {
       return fromJson(JSON.parse(fileContent));
     } catch (e) {
-      //eslint-disable-next-line
+       
       console.log('error loading JSON: ', e)
     }
   }
